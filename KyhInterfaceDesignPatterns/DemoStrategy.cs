@@ -117,7 +117,6 @@ public class RouteCalculator
         //Calculate best route
         foreach(var route in strategy.Waypoints(from,to))
             Console.WriteLine(route);
-        //Man kan tänka sig ha OLIKA strategier
         return true;
     }
 
@@ -133,13 +132,24 @@ public class DemoStrategy
     public void Run()
     {
         var routeCalulator = new RouteCalculator();
-        routeCalulator.PresentRoute("Stockholm", "Uppsala");
+        
 
         //När du har saker som du vill BEARBETA på olika sätt beroende på olika faktorer
         //
+        IRouteStrategy strategy = null;
         Console.WriteLine("1. Snabbaste");
         Console.WriteLine("2. Vackraste");
         Console.WriteLine("3. Billigaste");
+        var sel = Console.ReadLine();
+        if (sel == "1")
+            strategy = new FastestRouteStrategy();
+        else if (sel == "2")
+            strategy = new MostBeautifulRouteStrategy();
+        else if (sel == "3")
+            strategy = new ShortestRouteStrategy();
+        var res = routeCalulator.PresentRoute("Uppsala", "Stockholm", strategy);
+
+        // FACTORY!!!
 
         var l1 = new SortableList();
         l1.Add("Stefan");
