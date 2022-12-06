@@ -67,11 +67,32 @@ namespace KyhInterfaceDesignPatterns
             return true;
         }
     }
+
+    public class GameRules
+    {
+        private GameRules()
+        {
+            
+        }
+        public static GameRules Instance { get; } = new GameRules();
+        public bool CanMoveLeft(string player)
+        {
+            return false;
+        } 
+    }
+
     public class WavToMp3
     {
 
         public void Run()
         {
+            
+            var gamesRules = GameRules.Instance;
+            ;
+            var a = gamesRules.CanMoveLeft("dds");
+
+
+
             Console.Write("Ange filnamn:");
             string namn = Console.ReadLine();
 
