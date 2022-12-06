@@ -16,7 +16,7 @@ class Transaction
 internal class App
 {
     //Lets say we have a function CheckForMoneyLaundry( ...transactions ) -> true eller false om det är misstänkta transaktioner
-    public bool CheckForMoneyLaundry(List<Transaction> transactions)
+    public bool CheckForMoneyLaundry(IEnumerable<Transaction> transactions)
     {
         foreach(var transaction in transactions)
         {
@@ -24,6 +24,7 @@ internal class App
         }
         return false;
     }
+  
     public void Demo1Interface()
     {
         var t1 = new Transaction { Dag = DateTime.Now, Belopp = 1000, TransactionType = TransactionType.Withdrawal };
@@ -34,7 +35,7 @@ internal class App
 
         //Men om vi har array, eller dbset eller ngt annat...
         var lista2 = new[] { t1, t2, t3 };
-        //CheckForMoneyLaundry(lista2);
+        CheckForMoneyLaundry(lista2);
     }
 
     public void Run()
