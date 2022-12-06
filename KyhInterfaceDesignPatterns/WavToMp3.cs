@@ -35,6 +35,29 @@ namespace KyhInterfaceDesignPatterns
             Console.WriteLine("Nu körs low");
         }
     }
+
+    public enum ConverterQuality
+    {
+        Low,
+        Medium,
+        High,
+        SuperHigh
+    }
+
+    public class ConverterQualityFactory
+    {
+        public IConvertWavToMp3 Create(ConverterQuality action)
+        {
+            IConvertWavToMp3 strategy = null;
+            if (action == ConverterQuality.Low)
+                strategy = new LowQualityConverter();
+            else if (action == ConverterQuality.Medium)
+                strategy = new MediumQualityConverter();
+            if (action == ConverterQuality.High)
+                strategy = new HighQualityConverter();
+            return strategy;
+        }
+    }
     public class Converter
     {
         public bool Convert(string namn, IConvertWavToMp3 strategy)
@@ -51,18 +74,20 @@ namespace KyhInterfaceDesignPatterns
         {
             Console.Write("Ange filnamn:");
             string namn = Console.ReadLine();
-            Console.WriteLine("1.Low ");
-            Console.WriteLine("2.Medium");
-            Console.WriteLine("3. High");
+
+
+            foreach (var enumvarde in Enum.GetNames<ConverterQuality>())
+            {
+                Console.WriteLine(enumvarde);
+            }
+            // Console.WriteLine("Low");
+            //Console.WriteLine("Medium");
+            //Console.WriteLine("High");
             var action = Console.ReadLine();
             var converter = new Converter();
-            IConvertWavToMp3 strategy = null;
-            if (action == "1")
-                strategy = new LowQualityConverter();
-            else if (action == "2")
-                strategy = new MediumQualityConverter();
-            if (action == "3")
-                strategy = new HighQualityConverter();
+            var factory = new ConverterQualityFactory();
+            var quality = Enum.Parse<ConverterQuality>(action);
+            var strategy = factory.Create(quality);
 
             converter.Convert(namn, strategy);
             
